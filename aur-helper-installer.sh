@@ -9,6 +9,10 @@
 # Creadits to AUI from helmuthdu github          #
 ##################################################
 
+##[TODO]##########################################
+# Add more aur helpers                           #
+##################################################
+
 function main() {
     clear
     read -p "
@@ -17,16 +21,14 @@ function main() {
     [1] - yay
     [2] - yaourt
     [3] - trizen
-    " input;
+
+->" input;
 
     if [[ $input -eq 1 ]]; then
-        clear;
         yay_install;
     elif [[ $input -eq 2 ]]; then
-        clear;
         yaourt_install;
     elif [[ $input -eq 3 ]]; then
-        clear;
         trizen_install;
     else
         echo "Wrong input, try again!"
@@ -35,14 +37,39 @@ function main() {
 }
 
 function yay_install() {
+    clear;
     echo "Installing yay..."
-    echo "Yet another yogurt. Pacman wrapper and AUR helper written in go."
+    echo -e "Yet another yogurt. Pacman wrapper and AUR helper written in go.\n\n\n"
 
-    curl -o yay.tar.gz https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz
-    tar zxvf yay.tar.gz
-    rm yay.tar.gz
-    cd yay
-    makepkg -csi --noconfirm && echo 'DONE!'
+    install "yay";
+
+}
+
+function yaourt_install() {
+    clear;
+    echo "Installing Yaourt...";
+    echo -e "A pacman wrapper with extended features and AUR support\n\n\n";
+
+    install "yaourt";
+}
+
+function trizen_install() {
+    clear;
+    echo "Installing Trizen..."
+    echo -e "Lightweight AUR Package Manager\n\n\n"
+
+    install "trizen"
+}
+
+function install() {
+
+    for PKG in $1; do
+        curl -o ${PKG}.tar.gz https://aur.archlinux.org/cgit/aur.git/snapshot/${PKG}.tar.gz
+        tar zxvf ${PKG}.tar.gz
+         rm ${PKG}.tar.gz
+         cd ${PKG}
+         makepkg -csi --noconfirm
+     done
 }
 
 main;

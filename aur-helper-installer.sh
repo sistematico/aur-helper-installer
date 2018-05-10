@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #[INFO]###########################################
 # Autor      = José Augusto a.k.a jok3r          #
